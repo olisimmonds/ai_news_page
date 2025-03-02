@@ -2,7 +2,12 @@ import requests
 import datetime
 import os
 import streamlit as st
+from dotenv import load_dotenv
 
+# Load the .env file
+load_dotenv()
+
+# Now you can access your API key
 API_KEY = os.getenv("NEWSAPI_KEY")
 BASE_URL = "https://newsapi.org/v2/everything"
 
