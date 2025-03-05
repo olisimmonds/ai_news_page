@@ -23,7 +23,9 @@ def fetch_news(query):
     }
     response = requests.get(BASE_URL, params=params)
     if response.status_code == 200:
-        return response.json().get("articles", [])
+        articles=response.json().get("articles", [])
+        articles.sort(key=lambda x: x["publishedAt"], reverse=True)
+        return articles
     else:
         return []
     

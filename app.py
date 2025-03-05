@@ -5,7 +5,7 @@ from src.news_fetcher import fetch_news, display_news
 st.set_page_config(page_title="News App", layout="wide")
 
 # Sidebar navigation
-page = st.sidebar.selectbox("Category", ["AI News", "Finance News", "Political News"])
+page = st.sidebar.radio("Category", ["AI News", "Finance News", "Political News"])
 
 # Fetch and display articles based on selected category
 if page == "AI News":
