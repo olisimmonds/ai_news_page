@@ -1,21 +1,25 @@
 import streamlit as st
 from src.news_fetcher import fetch_news, display_news
 
-# Streamlit page configuration
-st.set_page_config(page_title="News App", layout="wide")
+st.set_page_config(page_title="AI News", page_icon="📰", layout="wide")
 
-# Sidebar navigation
-page = st.sidebar.radio("Category", ["AI News", "Finance News", "Political News"])
+# Constrain content width on very large screens for readability.
+st.markdown(
+    "<style>.block-container{max-width:1400px;padding-top:1.5rem;}</style>",
+    unsafe_allow_html=True,
+)
 
-# Fetch and display articles based on selected category
-if page == "AI News":
-    articles = fetch_news("artificial intelligence")
-    display_news(articles, "AI News")
+CATEGORIES: dict[str, str] = {
+    "AI News": "artificial intelligence",
+    "Finance News": "finance",
+    "Political News": "politics",
+}
 
-elif page == "Finance News":
-    articles = fetch_news("finance")
-    display_news(articles, "Finance News")
+page = st.sidebar.radio("Category", list(CATEGORIES.keys()))
 
-elif page == "Political News":
-    articles = fetch_news("politics")
-    display_news(articles, "Political News")
+query = CATEGORIES[page]
+
+with st.spinner("Fetching latest news..."):
+    articles = fetch_news(query)
+
+display_news(articles, page)
